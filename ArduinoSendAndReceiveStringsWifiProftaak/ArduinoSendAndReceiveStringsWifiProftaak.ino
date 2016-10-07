@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <SPI.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
@@ -5,10 +6,10 @@
 
 RP6_registers regs;
 RP6_LEDs leds;
-RP6_DIRECTION dir = RP6_FORWARD;
+P6_DIRECTION dir = RP6_FORWARD;
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "dd-wrt"; //  your network SSID (name)
+char ssid[] = "ICIDU"; //  your network SSID (name)
 char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 
