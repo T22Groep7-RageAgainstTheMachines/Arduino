@@ -1,35 +1,30 @@
 void processMessage(String message) {
-  Serial.println("processMessage()");
-  if (message == "F")
+  Serial.println(message);
+  if (message == "CD")
   {
-    Rp6.moveAtSpeed(50, 50);
-  }
-  if (message == "B")
-  {
-    Rp6.moveAtSpeed(-50, -50);
-  }
-  if (message == "L")
-  {
-    Rp6.moveAtSpeed(40, 60);
-  }
-  if (message == "R")
-  {
-    Rp6.moveAtSpeed(60, 40);
-  }
-  if (message == "C")
-  {
-    if (dir == RP6_BACKWARD) {
+    if (dir == RP6_BACKWARD)
+    {
       dir = RP6_FORWARD;
     }
-    else {
+    else
+    {
       dir = RP6_BACKWARD;
     }
     Rp6.changeDirection(dir);
   }
-  if (message == "Stop")
+  if (message == "STOP")
   {
     Rp6.stop();
   }
+  if (message == "RR")
+  {
+    Rp6.rotate(50, dir, 180);
+  }
+  if (message == "RL")
+  {
+    Rp6.rotate(50, dir, 180);
+  }
+  
   else
   {
     return;

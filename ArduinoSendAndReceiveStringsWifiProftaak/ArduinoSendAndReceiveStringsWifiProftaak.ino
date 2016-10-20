@@ -3,13 +3,16 @@
 #include <WiFiUdp.h>
 #include "Rp6.h"
 
+int speedLeft;
+int speedRight;
+
 RP6_registers regs;
 RP6_LEDs leds;
 RP6_DIRECTION dir = RP6_FORWARD;
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "dd-wrt"; //  your network SSID (name)
-char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "Battlebots"; //  your network SSID (name)
+char pass[] = "BattlebotsWifi";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 
 unsigned int localPort = 2390;      // local port to listen on
@@ -43,7 +46,7 @@ void setup() {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-    status = WiFi.begin(ssid);
+    status = WiFi.begin(ssid, pass);
 
     // wait 10 seconds for connection:
     delay(1000);
@@ -56,6 +59,9 @@ void setup() {
   Udp.begin(localPort);
   Serial.println("Connected");
   Rp6.begin();
+  speedLeft = 0;
+  speedRight = 0;
+
 }
 
 void loop() {
