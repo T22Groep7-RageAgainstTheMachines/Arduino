@@ -15,13 +15,14 @@ int status = WL_IDLE_STATUS;
 char ssid[] = "ICIDU"; //  your network SSID (name)
 char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
-
 unsigned int localPort = 2390;      // local port to listen on
 
 char packetBuffer[255]; //buffer to hold incoming packet
 char  ReplyBuffer[] = "acknowledged";       // a string to send back
+char  SendBuffer[] = "Message";
 
 WiFiUDP Udp;
+IPAddress TargetPCip(192, 168, 1, 110); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -47,7 +48,7 @@ void setup() {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-    status = WiFi.begin(ssid);
+    status = WiFi.begin(ssid, pass);
 
     // wait 10 seconds for connection:
     delay(1000);
@@ -87,13 +88,26 @@ void loop() {
     String message = packetBuffer;
     processMessage(message);
 
-    // send a reply, to the IP address and port that sent us the packet we received
-    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-    Udp.write(ReplyBuffer);
-    Udp.endPacket();
+
   }
 }
 
+void RP6GotHit()
+{
+  //TODO if RP6 got hit
+  char gotHit[] = "GotHit";
+  Udp.beginPacket(TargetPCip, 11000);
+  Udp.write(gotHit);
+  Udp.endPacket();
+}
+void RP6Hit()
+{
+  //TODO if RP6 got hit
+  char hit[] = "GotHit";
+  Udp.beginPacket(TargetPCip, 11000);
+  Udp.write(Hit);
+  Udp.endPacket();
+}
 
 
 
