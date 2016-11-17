@@ -3,7 +3,18 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 #include "Rp6.h"
-
+#define HitPin 9
+#define OutPin 8
+#define GotHitPin 6
+#define AOut 3
+#define BOut 2
+#define COut 1
+#define DOut 0
+int stepsRemain;
+int steps;
+const int totalsteps = 1000;
+bool reverse;
+bool attack;
 int speedLeft;
 int speedRight;
 
@@ -26,7 +37,14 @@ IPAddress TargetPCip(192, 168, 1, 110); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
+  steps = -1;
+  stepsRemain = totalsteps;
+  attack = false;
+  reverse = false;
   Serial.begin(9600);
+  pinMode(9, INPUT);
+  pinMode(8, OUTPUT);
+  pinMode(6, INPUT);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
@@ -69,6 +87,15 @@ void setup() {
 void loop() {
   // if there's data available, read a packet
   int packetSize = Udp.parsePacket();
+  if (digitalRead GotHitPin == HIGH)
+  {
+    RP6GotHit();
+  }
+  if (digitalRead HitPin == HIGH)
+  {
+    RP6Hit();
+  }
+
   if (packetSize) {
     Serial.print("Received packet of size ");
     Serial.println(packetSize);
@@ -87,8 +114,50 @@ void loop() {
     Serial.println(packetBuffer);
     String message = packetBuffer;
     processMessage(message);
-
-
+  }
+  if (attack)
+  {
+    if (!reverse)
+    {
+      if (stepsRemain > 0)
+      {
+        steps++;
+        stepper();
+        if (steps > 3)
+        {
+          steps = -1;
+        }
+        stepsRemain--;
+      }
+      else
+      {
+        stepsRemain = totalsteps;
+        steps = 4;
+      }
+    }
+    else
+    {
+      if (stepsRemain > 0)
+      {
+        steps--;
+        stepper();
+        if (steps = 3)
+        {
+          steps = 4;
+        }
+        stepsRemain--;
+      }
+      else
+      {
+        steps =-1;
+        attack = false;
+        stepsRemain = totalsteps;
+        digitalWrite(AOut, LOW);
+        digitalWrite(BOut, LOW);
+        digitalWrite(COut, LOW);
+        digitalWrite(DOut, LOW);
+      }
+    }
   }
 }
 
@@ -103,13 +172,11 @@ void RP6GotHit()
 void RP6Hit()
 {
   //TODO if RP6 got hit
-  char hit[] = "GotHit";
+  char hit[] = "Hit";
   Udp.beginPacket(TargetPCip, 11000);
   Udp.write(Hit);
   Udp.endPacket();
 }
-
-
 
 
 
