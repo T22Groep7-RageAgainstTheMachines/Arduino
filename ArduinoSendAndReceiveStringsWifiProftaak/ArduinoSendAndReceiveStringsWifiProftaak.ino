@@ -12,8 +12,8 @@ RP6_LEDs leds;
 RP6_DIRECTION dir = RP6_FORWARD;
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "ICIDU"; //  your network SSID (name)
-char pass[] = "12345678";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "Battlebots"; //  your network SSID (name)
+char pass[] = "BattlebotsWifi";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 unsigned int localPort = 2390;      // local port to listen on
 
@@ -22,7 +22,7 @@ char  ReplyBuffer[] = "acknowledged";       // a string to send back
 char  SendBuffer[] = "Message";
 
 WiFiUDP Udp;
-IPAddress TargetPCip(192, 168, 1, 110); //Ip address van de battleStationPC
+IPAddress TargetPCip(192, 168, 137, 92); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -103,9 +103,9 @@ void RP6GotHit()
 void RP6Hit()
 {
   //TODO if RP6 got hit
-  char hit[] = "GotHit";
+  char hit[] = "Hit";
   Udp.beginPacket(TargetPCip, 11000);
-  Udp.write(Hit);
+  Udp.write(hit);
   Udp.endPacket();
 }
 
