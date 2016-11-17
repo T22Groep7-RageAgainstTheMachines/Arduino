@@ -3,13 +3,17 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 #include "Rp6.h"
-#define HitPin 9
-#define OutPin 8
-#define GotHitPin 6
-#define AOut 3
-#define BOut 2
-#define COut 1
-#define DOut 0
+
+
+const int HitPin = 9;
+const int OutPin = 8;
+const int GotHitPin = 6;
+const int AOut = 3;
+const int BOut = 2;
+const int COut = 1;
+const int DOut = 0;
+
+
 int stepsRemain;
 int steps;
 const int totalsteps = 1000;
@@ -87,11 +91,11 @@ void setup() {
 void loop() {
   // if there's data available, read a packet
   int packetSize = Udp.parsePacket();
-  if (digitalRead GotHitPin == HIGH)
+  if (digitalRead(GotHitPin) == HIGH)
   {
     RP6GotHit();
   }
-  if (digitalRead HitPin == HIGH)
+  if (digitalRead(HitPin) == HIGH)
   {
     RP6Hit();
   }
@@ -172,7 +176,7 @@ void RP6GotHit()
 void RP6Hit()
 {
   //TODO if RP6 got hit
-  char hit[] = "Hit";
+  char Hit[] = "Hit";
   Udp.beginPacket(TargetPCip, 11000);
   Udp.write(Hit);
   Udp.endPacket();
