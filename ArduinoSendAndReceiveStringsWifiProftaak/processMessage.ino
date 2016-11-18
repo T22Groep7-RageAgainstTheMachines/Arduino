@@ -32,7 +32,7 @@ void processMessage(String message) {
   {
     Rp6.rotate(200, RP6_LEFT, 180);
   }
-  if (message == "ATTACK")
+  if (message == "%ATTACK#")
   {
     attack = true;
   }
