@@ -28,7 +28,7 @@ void processMessage(String message) {
   {
     Rp6.rotate(200, RP6_RIGHT, 180);
   }
-  if (message == "#RL%")
+  if (message == "%RL#")
   {
     Rp6.rotate(200, RP6_LEFT, 180);
   }
