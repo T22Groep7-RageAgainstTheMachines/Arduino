@@ -2,13 +2,29 @@ void processMessage(String message) {
   Serial.println(message);
   if (message == "%MF#")
   {
-    Rp6.move(200,  RP6_FORWARD, 1000);
+    dir = RP6_FORWARD;
+    Rp6.moveAtSpeed(255, 255);
+    //Rp6.move(200,  RP6_FORWARD, 1000);
   }
-  if (message == "%MB#")
+  else if (message == "%MB#")
   {
-    Rp6.move(200,  RP6_BACKWARD, 1000);
+    dir = RP6_BACKWARD;
+    Rp6.moveAtSpeed(255, 255);
+    //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
-  if (message == "%CD#")
+  else if (message == "%MR#")
+  {
+    dir = RP6_RIGHT;
+    Rp6.moveAtSpeed(255, 255);
+    //Rp6.move(200,  RP6_BACKWARD, 1000);
+  }
+  else if (message == "%ML#")
+  {
+    dir = RP6_LEFT;
+    Rp6.moveAtSpeed(255, 255);
+    //Rp6.move(200,  RP6_BACKWARD, 1000);
+  }
+  else if (message == "%CD#")
   {
     Rp6.stop();
     if (dir == RP6_BACKWARD)
@@ -20,19 +36,19 @@ void processMessage(String message) {
       dir = RP6_BACKWARD;
     }
   }
-  if (message == "%STOP#")
+  else if (message == "%STOP#")
   {
     Rp6.stop();
   }
-  if (message == "%RR#")
+  else if (message == "%RR#")
   {
     Rp6.rotate(200, RP6_RIGHT, 180);
   }
-  if (message == "%RL#")
+  else  if (message == "%RL#")
   {
     Rp6.rotate(200, RP6_LEFT, 180);
   }
-  if (message == "%ATTACK#")
+  else  if (message == "%ATTACK#")
   {
     attack = true;
   }
