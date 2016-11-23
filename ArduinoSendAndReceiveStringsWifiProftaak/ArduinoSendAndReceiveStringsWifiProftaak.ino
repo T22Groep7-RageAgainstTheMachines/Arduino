@@ -6,6 +6,7 @@
 
 int speedLeft;
 int speedRight;
+unsigned long timer = 0;
 
 RP6_registers regs;
 RP6_LEDs leds;
@@ -26,6 +27,7 @@ IPAddress TargetPCip(192, 168, 137, 92); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
+  timer = millis();
   steps = -1;
   stepsRemain = totalsteps;
   attack = false;
@@ -80,12 +82,12 @@ void setup() {
 void loop() {
   // if there's data available, read a packet
 
-  if(digitalRead(HitPin) == HIGH)
+  if (digitalRead(HitPin) == HIGH)
   {
     RP6Hit();
   }
 
-  if(digitalRead(GotHitPin) == HIGH)
+  if (digitalRead(GotHitPin) == HIGH)
   {
     RP6GotHit();
   }
@@ -110,49 +112,53 @@ void loop() {
     processMessage(message);
     if (attack)
     {
-      if (!reverse)
+      if (millis() - timer > 2)
       {
-        if (stepsRemain > 0)
+        timer+= 2;
+        if (!reverse)
         {
-          steps++;
-          stepper();
-          if (steps > 3)
+          if (stepsRemain > 0)
           {
-            steps = -1;
+            steps++;
+            stepper();
+            if (steps > 3)
+            {
+              steps = -1;
+            }
+            stepsRemain--;
           }
-          stepsRemain--;
-        }
-        else
-        {
-          stepsRemain = totalsteps;
-          steps = 4;
-        }
-      }
-      else
-      {
-        if (stepsRemain > 0)
-        {
-          steps--;
-          stepper();
-          if (steps = 3)
+          else
           {
+            stepsRemain = totalsteps;
             steps = 4;
           }
-          stepsRemain--;
         }
         else
         {
-          steps = -1;
-          attack = false;
-          stepsRemain = totalsteps;
-          digitalWrite(AOut, LOW);
-          digitalWrite(BOut, LOW);
-          digitalWrite(COut, LOW);
-          digitalWrite(DOut, LOW);
+          if (stepsRemain > 0)
+          {
+            steps--;
+            stepper();
+            if (steps = 3)
+            {
+              steps = 4;
+            }
+            stepsRemain--;
+          }
+          else
+          {
+            reverse = false
+            steps = -1;
+            attack = false;
+            stepsRemain = totalsteps;
+            digitalWrite(AOut, LOW);
+            digitalWrite(BOut, LOW);
+            digitalWrite(COut, LOW);
+            digitalWrite(DOut, LOW);
+          }
         }
       }
     }
-
   }
 }
 
