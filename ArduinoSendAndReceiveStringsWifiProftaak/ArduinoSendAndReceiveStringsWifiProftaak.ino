@@ -60,7 +60,6 @@ void setup() {
   digitalWrite(BOut, LOW);
   digitalWrite(COut, LOW);
   digitalWrite(DOut, LOW);
-
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only

@@ -19,14 +19,14 @@ void processMessage(String message) {
   {
     dir = RP6_FORWARD;
     Rp6.changeDirection(dir);
-    Rp6.moveAtSpeed(255, 100);
+    Rp6.moveAtSpeed(255, 50);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%ML#")
   {
     dir = RP6_FORWARD;
     Rp6.changeDirection(dir);
-    Rp6.moveAtSpeed(100, 255);
+    Rp6.moveAtSpeed(50, 255);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%CD#")
