@@ -6,6 +6,7 @@
 
 int speedLeft;
 int speedRight;
+unsigned long timer = 0;
 
 RP6_registers regs;
 RP6_LEDs leds;
@@ -26,6 +27,18 @@ IPAddress TargetPCip(192, 168, 137, 92); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
+  timer = millis();
+  steps = -1;
+  stepsRemain = totalsteps;
+  attack = false;
+  reverse = false;
+  pinMode(9, INPUT);
+  pinMode(8, OUTPUT);
+  pinMode(6, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(1, OUTPUT);
+  pinMode(0, OUTPUT);
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
@@ -68,6 +81,16 @@ void setup() {
 
 void loop() {
   // if there's data available, read a packet
+
+  if (digitalRead(HitPin) == HIGH)
+  {
+    RP6Hit();
+  }
+
+  if (digitalRead(GotHitPin) == HIGH)
+  {
+    RP6GotHit();
+  }
   int packetSize = Udp.parsePacket();
   if (packetSize) {
     Serial.print("Received packet of size ");
@@ -87,8 +110,55 @@ void loop() {
     Serial.println(packetBuffer);
     String message = packetBuffer;
     processMessage(message);
-
-
+    if (attack)
+    {
+      if (millis() - timer > 2)
+      {
+        timer+= 2;
+        if (!reverse)
+        {
+          if (stepsRemain > 0)
+          {
+            steps++;
+            stepper();
+            if (steps > 3)
+            {
+              steps = -1;
+            }
+            stepsRemain--;
+          }
+          else
+          {
+            stepsRemain = totalsteps;
+            steps = 4;
+          }
+        }
+        else
+        {
+          if (stepsRemain > 0)
+          {
+            steps--;
+            stepper();
+            if (steps = 3)
+            {
+              steps = 4;
+            }
+            stepsRemain--;
+          }
+          else
+          {
+            reverse = false
+            steps = -1;
+            attack = false;
+            stepsRemain = totalsteps;
+            digitalWrite(AOut, LOW);
+            digitalWrite(BOut, LOW);
+            digitalWrite(COut, LOW);
+            digitalWrite(DOut, LOW);
+          }
+        }
+      }
+    }
   }
 }
 
