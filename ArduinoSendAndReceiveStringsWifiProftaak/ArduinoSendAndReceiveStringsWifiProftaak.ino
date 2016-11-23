@@ -45,7 +45,7 @@ void setup() {
   steps = 0;
   stepsRemain = totalsteps;
   attack = false;
-  reverse = false;
+  reverse = true;
   pinMode(9, INPUT);
   pinMode(8, OUTPUT);
   pinMode(6, INPUT);
