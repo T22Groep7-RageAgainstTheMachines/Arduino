@@ -106,7 +106,8 @@ void loop() {
     RP6GotHit();
   }
   int packetSize = Udp.parsePacket();
-  if (packetSize) {
+  if (packetSize) 
+  {
     Serial.print("Received packet of size ");
     Serial.println(packetSize);
     Serial.print("From ");
@@ -132,31 +133,31 @@ void loop() {
         if (!reverse)
         {
           if (stepsRemain > 0)
-          {
-            steps++;
+          {            
             stepper();
+            steps++;
             if (steps > 3)
             {
-              steps = -1;
+              steps = 0;
             }
             stepsRemain--;
           }
           else
           {
             stepsRemain = totalsteps;
-            steps = 4;
+            steps = 3;
           }
         }
         else
         {
           if (stepsRemain > 0)
-          {
-            steps--;
-            stepper();
-            if (steps = 3)
+          {            
+            stepper();            
+            if (steps == 0)
             {
               steps = 4;
             }
+            steps--;
             stepsRemain--;
           }
           else
@@ -164,7 +165,7 @@ void loop() {
             reverse = false;
 
             
-            steps = -1;
+            steps = 0;
             attack = false;
             stepsRemain = totalsteps;
             digitalWrite(AOut, LOW);
