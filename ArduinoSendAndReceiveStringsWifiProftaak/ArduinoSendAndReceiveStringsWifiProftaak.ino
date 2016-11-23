@@ -42,7 +42,7 @@ IPAddress TargetPCip(192, 168, 1, 122); //Ip address van de battleStationPC
 void setup() {
   //Initialize serial and wait for port to open:
   timer = millis();
-  steps = -1;
+  steps = 0;
   stepsRemain = totalsteps;
   attack = false;
   reverse = false;
@@ -129,7 +129,7 @@ void loop() {
     {
       if (millis() - timer > 2)
       {
-        timer+= 2;
+        timer = millis();
         if (!reverse)
         {
           if (stepsRemain > 0)
@@ -146,6 +146,7 @@ void loop() {
           {
             stepsRemain = totalsteps;
             steps = 3;
+            reverse = true;
           }
         }
         else
