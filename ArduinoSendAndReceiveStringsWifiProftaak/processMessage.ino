@@ -3,25 +3,30 @@ void processMessage(String message) {
   if (message == "%MF#")
   {
     dir = RP6_FORWARD;
+    Rp6.changeDirection(dir);
     Rp6.moveAtSpeed(255, 255);
     //Rp6.move(200,  RP6_FORWARD, 1000);
+
   }
   else if (message == "%MB#")
   {
     dir = RP6_BACKWARD;
+    Rp6.changeDirection(dir);
     Rp6.moveAtSpeed(255, 255);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%MR#")
   {
     dir = RP6_RIGHT;
-    Rp6.moveAtSpeed(255, 255);
+    Rp6.changeDirection(dir);
+    Rp6.moveAtSpeed(255, 200);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%ML#")
   {
     dir = RP6_LEFT;
-    Rp6.moveAtSpeed(255, 255);
+    Rp6.changeDirection(dir);
+    Rp6.moveAtSpeed(255, 200);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%CD#")
@@ -30,10 +35,12 @@ void processMessage(String message) {
     if (dir == RP6_BACKWARD)
     {
       dir = RP6_FORWARD;
+      Rp6.changeDirection(dir);
     }
     else
     {
       dir = RP6_BACKWARD;
+      Rp6.changeDirection(dir);
     }
   }
   else if (message == "%STOP#")
