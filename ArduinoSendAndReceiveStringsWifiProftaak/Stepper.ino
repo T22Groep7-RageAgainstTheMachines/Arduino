@@ -1,17 +1,5 @@
-const int HitPin = 9;
-const int OutPin = 8;
-const int GotHitPin = 6;
-const int AOut = 3;
-const int BOut = 2;
-const int COut = 1;
-const int DOut = 0;
 
 
-int stepsRemain;
-int steps;
-const int totalsteps = 1000;
-bool reverse;
-bool attack;
 
 
 void stepper() {

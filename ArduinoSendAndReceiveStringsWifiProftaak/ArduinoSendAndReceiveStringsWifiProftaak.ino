@@ -4,6 +4,15 @@
 #include <WiFiUdp.h>
 #include "Rp6.h"
 
+const int HitPin = 9;
+const int OutPin = 8;
+const int GotHitPin = 6;
+const int AOut = 3;
+const int BOut = 2;
+const int COut = 1;
+const int DOut = 0;
+
+
 int speedLeft;
 int speedRight;
 unsigned long timer = 0;
@@ -21,6 +30,11 @@ unsigned int localPort = 2390;      // local port to listen on
 char packetBuffer[255]; //buffer to hold incoming packet
 char  ReplyBuffer[] = "acknowledged";       // a string to send back
 char  SendBuffer[] = "Message";
+int stepsRemain;
+int steps;
+const int totalsteps = 1000;
+bool reverse;
+bool attack;
 
 WiFiUDP Udp;
 IPAddress TargetPCip(192, 168, 137, 92); //Ip address van de battleStationPC
@@ -147,7 +161,9 @@ void loop() {
           }
           else
           {
-            reverse = false
+            reverse = false;
+
+            
             steps = -1;
             attack = false;
             stepsRemain = totalsteps;
