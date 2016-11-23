@@ -99,8 +99,8 @@ void loop() {
   if (digitalRead(HitPin) == HIGH)
   {
     RP6Hit();
+    
   }
-
   if (digitalRead(GotHitPin) == HIGH)
   {
     RP6GotHit();

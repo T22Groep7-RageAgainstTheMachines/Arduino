@@ -17,14 +17,14 @@ void processMessage(String message) {
   }
   else if (message == "%MR#")
   {
-    dir = RP6_RIGHT;
+    dir = RP6_FORWARD;
     Rp6.changeDirection(dir);
     Rp6.moveAtSpeed(255, 200);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
   }
   else if (message == "%ML#")
   {
-    dir = RP6_LEFT;
+    dir = RP6_FORWARD;
     Rp6.changeDirection(dir);
     Rp6.moveAtSpeed(255, 200);
     //Rp6.move(200,  RP6_BACKWARD, 1000);
