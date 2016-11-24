@@ -32,12 +32,18 @@ void stepper()
     digitalWrite(DOut, LOW); 
     break;  
   } 
-  if(_dir){ 
+  if(totalSteps == 2)
+  {
+    totalSteps = 0;
+    attack = false;
+  }
+  (_dir){ 
     _step++;
     stepsRemain--;
     if(stepsRemain <= 0){
       stepsRemain = totalsteps;
       _dir = false;
+      totalSteps++;
     }
   }
   else{ 
@@ -46,6 +52,7 @@ void stepper()
     if(stepsRemain <= 0){
       stepsRemain = totalsteps;
       _dir = true;
+      totalSteps++;
     }
   } 
   if(_step>3){ 

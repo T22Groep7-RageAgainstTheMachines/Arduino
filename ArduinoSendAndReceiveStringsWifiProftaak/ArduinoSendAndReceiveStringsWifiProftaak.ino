@@ -6,7 +6,7 @@
 
 const int HitPin = 9;
 const int OutPin = 8;
-const int GotHitPin = 6;
+const int GotHitPin = A0;
 const int AOut = 6;
 const int BOut = 5;
 const int COut = 3;
@@ -32,6 +32,7 @@ char packetBuffer[255]; //buffer to hold incoming packet
 char  ReplyBuffer[] = "acknowledged";       // a string to send back
 char  SendBuffer[] = "Message";
 int stepsRemain;
+int totalSteps = 0;
 int _step;
 const int totalsteps = 750;
 bool _dir;
@@ -112,7 +113,7 @@ void loop() {
       stepper();
       }
     }
-  if (digitalRead(HitPin) == HIGH && (millis() - hitTimer) > 3000)
+  if (analogRead(HitPin) > 600 && (millis() - hitTimer) > 3000)
   {
     hitTimer = millis();
     RP6Hit();
