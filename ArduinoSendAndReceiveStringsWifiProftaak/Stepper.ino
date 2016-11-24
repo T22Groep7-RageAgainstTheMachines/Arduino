@@ -37,7 +37,7 @@ void stepper()
     totalSteps = 0;
     attack = false;
   }
-  (_dir){ 
+  else if (_dir){ 
     _step++;
     stepsRemain--;
     if(stepsRemain <= 0){
