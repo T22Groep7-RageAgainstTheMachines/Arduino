@@ -15,6 +15,8 @@ const int DOut = 2;
 int speedLeft;
 int speedRight;
 unsigned long timer = 0;
+unsigned long gotHitTimer = 0;
+unsigned long hitTimer = 0;
 
 RP6_registers regs;
 RP6_LEDs leds;
@@ -110,13 +112,14 @@ void loop() {
       stepper();
       }
     }
-  if (digitalRead(HitPin) == HIGH)
+  if (digitalRead(HitPin) == HIGH && (millis() - hitTimer) > 3000)
   {
+    hitTimer = millis();
     RP6Hit();
-
   }
-  if (digitalRead(GotHitPin) == HIGH)
+  if (digitalRead(GotHitPin) == HIGH && (millis() - gotHitTimer) > 3000)
   {
+    gotHitTimer = millis();
     RP6GotHit();
   }
   int packetSize = Udp.parsePacket();
