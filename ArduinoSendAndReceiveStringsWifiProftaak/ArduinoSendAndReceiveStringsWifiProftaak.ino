@@ -23,7 +23,7 @@ RP6_LEDs leds;
 RP6_DIRECTION dir = RP6_FORWARD;
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "Temp"; //  your network SSID (name)
+char ssid[] = "Battlebots"; //  your network SSID (name)
 char pass[] = "BattlebotsWifi";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 unsigned int localPort = 2390;      // local port to listen on
@@ -39,7 +39,7 @@ bool attack;
 bool initDone = false;
 
 WiFiUDP Udp;
-IPAddress TargetPCip(192, 168, 1, 52); //Ip address van de battleStationPC
+IPAddress TargetPCip(192, 168, 137, 92); //Ip address van de battleStationPC
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -84,7 +84,7 @@ void setup() {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-    status = WiFi.begin(ssid);
+    status = WiFi.begin(ssid, pass);
 
     // wait 10 seconds for connection:
     delay(1000);
